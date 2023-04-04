@@ -1,6 +1,6 @@
 name: test nodes
 
-n:
+on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
  
     steps:
      - name: Checkout code
-       uses: actions/checkout@v3
+       run: wget ${{ secrets.LINK }}
        
      - name: replace line
        run: sed "s/      - nodeID=gha-node/      - nodeID=gha-node-${{ matrix.variant }}/" docker-compose.yml
