@@ -1,0 +1,32 @@
+name: test nodes
+
+n:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  buildimage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [1, 2, 3, 4, 5]
+ 
+    steps:
+     - name: Checkout code
+       uses: actions/checkout@v3
+       
+     - name: replace line
+       run: sed "s/      - nodeID=gha-node/      - nodeID=gha-node-${{ matrix.variant }}/" docker-compose.yml
+       
+     - name: Build and run Docker Compose
+       run: |
+          docker-compose up -d
+      
+      
+
+      
+      
+      
